@@ -1,0 +1,42 @@
+# 1. Folder Virtual Environment
+env_scanner/
+venv/
+.venv/
+
+# 2. Folder Hasil Jepretan Kamera & Gambar
+captures/
+failed_captures/
+*.jpg
+*.jpeg
+*.png
+
+# 3. File Cache & Build Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 4. Model AI / Bobot (YOLO, NCNN, TensorRT)
+best_ncnn_model/
+*.pt
+*.engine
+*.bin
+*.onnx
+*.tflite
+*.param
+*.yaml
+
+
+# 5. File Log & Rahasia
+logs/
+*.log
+.env
+pip-log.txt
+
+# 6. Konfigurasi IDE & Sistem Operasi
+.vscode/
+.DS_Store
+Thumbs.db
+
+random/
+*.prof
