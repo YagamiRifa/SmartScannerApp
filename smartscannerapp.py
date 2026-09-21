@@ -11,7 +11,7 @@ import threading
 import queue
 from datetime import datetime
 from calendar import monthrange
-from exp_scanner.date_parser import date_standard
+from date_parser import date_standard
 
 # ==================== [ KONFIGURASI ] ====================
 BASE_SERVER_URL = "http://192.168.137.1:8000" #TUFDASH15RIFA
@@ -170,7 +170,7 @@ class SmartScannerApp:
     def gui_update_ai_ready(self, durasi):
         self.is_ai_ready = True
         self.notif_pesan_teks = f"AI Siap! ({durasi:.1f} detik)\nTekan 'MID' untuk Mulai."
-        self.notif_pesan_warna = (46, 204, 113) # Warna Hijau
+        self.notif_pesan_warna = (230, 126, 34) # Warna Hijau
 
     # ============== [ PEMROSESAN KECERDASAN BUATAN ASINKRON ] =========
     def ai_worker_loop(self):
@@ -188,7 +188,7 @@ class SmartScannerApp:
             print(f"Model YOLO siap digunakan!\n✅ Durasi Inisiasi: {durasi_total:.2f} detik")
             
             # --- MODIFIKASI 4: Panggil GUI dari Thread Belakang ---
-            # Menggunakan lambda agar kita bisa mengirimkan data durasi_total ke GUI
+            # Menggunakan lambda agar bisa mengirimkan data durasi_total ke GUI
             self.window.after(0, lambda: self.gui_update_ai_ready(durasi_total))
 
 
@@ -292,7 +292,7 @@ class SmartScannerApp:
                             _, threshold_crop = cv2.threshold(resized_crop, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
                             
                             # custom_config = r'--oem 3 --psm 7 -c preserve_interword_spaces=1 -c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ./-:'
-                            # Tambahkan spasi di awal whitelist, dan ubah psm 7 menjadi psm 6
+                            
                             custom_config = r'--oem 3 --psm 6 -c preserve_interword_spaces=1 -c tessedit_char_whitelist= 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ./-:'
                             text_detected = pytesseract.image_to_string(resized_crop, config=custom_config).strip()
                             # text_detected = pytesseract.image_to_string(threshold_crop, config=custom_config).strip()
@@ -355,7 +355,7 @@ class SmartScannerApp:
                                         cv2.putText(frame, f"FPS: {self.fps:.2f}", (w - pad_x_kanan, pad_y_fps), cv2.FONT_HERSHEY_SIMPLEX, fs_kecil, (0, 255, 0), thick_tipis, cv2.LINE_AA)
 
                                         waktu_sekarang = datetime.now().strftime("%Y%m%d_%H%M%S")
-                                        nama_file_gagal = f"{waktu_sekarang}_fail_std_{barcode_id}_raw_{ocr_raw_text}.jpg"
+                                        nama_file_gagal = f"{waktu_sekarang}_fail_std_{barcode_id}.jpg"
                                         cv2.imwrite(os.path.join(self.output_folder, nama_file_gagal), frame)
                                         print(f"{nama_file_gagal} Tersimpan di folder: {self.output_folder}")
                                         print("="*50)
@@ -659,8 +659,8 @@ class SmartScannerApp:
                     self.notif_pesan_teks = "Tekan 'MID' untuk Scan Barcode"
                     self.notif_pesan_warna = (230, 126, 34)
                 else:
-                    self.notif_pesan_teks = "Jaringan OK. AI masih dimuat...\nMohon tunggu."
-                    self.notif_pesan_warna = (230, 126, 34)
+                    self.notif_pesan_teks = "AI masih dimuat...\nMohon tunggu."
+                    self.notif_pesan_warna = (15, 196, 241)
 
         self.window.after(4000, self.cek_koneksi_berkala)
 
